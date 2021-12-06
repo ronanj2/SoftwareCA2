@@ -1,26 +1,22 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.shared;
 
-public class Person implements Comparable<Person> {
-    private String firstname;
-    private String surname;
-    private int age;
+public record Person(int age, String surname, String firstname) implements Comparable<Person> {
 
-    public Person(int age, String surname, String firstname) {
-        this.age = age;
-        this.surname = surname;
-        this.firstname = firstname;
-    }
     public String getFirstname() {
         return firstname;
     }
+
     public String getSurname() {
         return surname;
     }
+
     public int getAge() {
         return age;
     }
+
     /**
-     * The natural ordering will be determined by age in this example
+     * The normal ordering is to be determined by age.
+     *
      * @param o
      * @return
      */
@@ -28,6 +24,7 @@ public class Person implements Comparable<Person> {
     public int compareTo(Person o) {
         return Integer.compare(age, o.age);
     }
+
     @Override
     public String toString() {
         return "Person{" +

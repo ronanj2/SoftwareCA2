@@ -1,4 +1,4 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.generics;
 
 public interface IStack <T>{
     /**

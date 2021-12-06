@@ -1,21 +1,21 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.generics;
 
 public interface IQueue<T> {
     /**
-     * Inserts the specified element into the queue
+     * Inserts the specified element into the queue.
      * @param element the element argument.
      */
     public void enqueue(T element);
     /**
      * Retrieves and removes the head of this queue.
      *
-     * @return the head of this queue
+     * @return the head of this queue.
      */
     public T dequeue(); //throw NoSuchElementException as appropriate
     /**
      * Retrieves, but does not remove, the head of this queue.
      *
-     * @return the head of this queue
+     * @return the head of this queue.
      */
     public T first(); //throw NoSuchElementException as appropriate
     /**

@@ -1,4 +1,8 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.programs.main;
+
+import com.student.l00170333.generics.GenericArrayList;
+import com.student.l00170333.generics.GenericCollections;
+import com.student.l00170333.shared.Person;
 
 public class GenericCollectionsTester1 {
     public static void main(String[] args) {
@@ -9,19 +13,24 @@ public class GenericCollectionsTester1 {
         myList.add(new Person(28, "Hardinge", "Frances"));
         myList.add(new Person(24, "Bryson", "Bill"));
         myList.add(new Person(26, "Ness", "Patrick"));
+
         printList("Original List:", myList);
+
         //This method uses compareTo() to do its job
         GenericCollections.sort(myList);
+
         printList("\nSorted List based on natural ordering (age):", myList);
+
         GenericCollections.rotate(myList, 2);
         printList("\nList rotated by two:", myList);
+
         System.out.println("\nThe oldest person is " + GenericCollections.max(myList));
     }
-    public static void printList(String message, GenericArrayList<Person> listToPrint)
-    {
+
+    public static void printList(String message, GenericArrayList<Person> listToPrint) {
         System.out.println(message);
-        for (Person currPerson: listToPrint)
-        {
+        //TODO: Get this working
+        for (Person currPerson : listToPrint) {
             System.out.println(currPerson.toString());
         }
     }

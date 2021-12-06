@@ -1,4 +1,4 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.generics;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -51,9 +51,8 @@ public class GenericLinkedList<T> implements IList<T> {
 
             prevNode.next = newNode;
             newNode.next = nextNode;
+            incrementCounter();
         }
-
-        incrementCounter();
     }
 
     /**
@@ -66,7 +65,11 @@ public class GenericLinkedList<T> implements IList<T> {
         newNode.next = head;
         head = newNode;
 
-        incrementCounter(); //?????? TODO: check
+        // If this is the first element for the list, we must also set the tail.
+        if (size() == 0)
+            tail = newNode;
+
+        incrementCounter();
     }
 
     /**
@@ -84,25 +87,6 @@ public class GenericLinkedList<T> implements IList<T> {
         node.data = element;
         return prevData;
     }
-
-    /*public T get(int index) {
-        // returns the element at the specified position in this list.
-        // index must be 1 or higher
-        if (index < 0)
-            return null;
-        Node current = null;
-        if (head != null) {
-            current = head.getNext();
-            for (int i = 0; i < index; i++) {
-                if (current.getNext() == null)
-                    break;
-
-                current = current.getNext();
-            }
-            return current.getData();
-        }
-        return null;
-    }*/
 
     /**
      * Returns the element at the specified position in this list.
@@ -186,7 +170,7 @@ public class GenericLinkedList<T> implements IList<T> {
 
     /**
      * @param elem the element to remove
-     * @return whether the elements was removed or not
+     * @return whether the element was removed or not
      */
     @Override
     public boolean remove(T elem) {
@@ -198,6 +182,7 @@ public class GenericLinkedList<T> implements IList<T> {
         if (index < 0) {
             return false;
         }
+
         remove(index);
         return true;
     }
@@ -265,7 +250,6 @@ public class GenericLinkedList<T> implements IList<T> {
             return data;
         }
 
-        @SuppressWarnings("unused")
         public void setData(T dataValue) {
             data = dataValue;
         }
@@ -295,7 +279,7 @@ public class GenericLinkedList<T> implements IList<T> {
     /**
      * Rotates the elements in the specified list by the specified distance.
      *
-     * @param distance
+     * @param distance to rotate
      */
     @Override
     public void rotate(int distance) {
@@ -312,7 +296,6 @@ public class GenericLinkedList<T> implements IList<T> {
             temp = remove(size() - 1);
             add(0, temp);
         }
-
     }
 
     @Override

@@ -1,4 +1,8 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.programs.main;
+
+import com.student.l00170333.generics.GenericArrayList;
+import com.student.l00170333.generics.GenericLinkedList;
+import com.student.l00170333.generics.IList;
 
 public class Main {
 
@@ -20,6 +24,12 @@ public class Main {
         aThirdList.add("Myself");
         aThirdList.add("I");
         printList("aThirdList", aThirdList);
+
+        GenericArrayList<Integer> bList = new GenericArrayList<>();
+        bList.add(5); bList.add(2); bList.add(3);
+        for(Integer currElement: bList) {
+            System.out.println(currElement + " ");
+        }
     }
 
     private static <T> void printList(String listName, IList<T> listToPrint) {

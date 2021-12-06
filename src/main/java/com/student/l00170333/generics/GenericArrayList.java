@@ -1,4 +1,4 @@
-package com.student.L00170333.CA2;
+package com.student.l00170333.generics;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -19,7 +19,7 @@ public class GenericArrayList<T> implements IList<T> {
 
     private static final int INITIAL_CAPACITY = 3;//nice and small so that we test it quickly
 
-    /** Default Constructor */
+    /** Default ctor */
     public GenericArrayList() {
         currentCapacity = INITIAL_CAPACITY;
         nextFreeLoc = 0;
@@ -58,17 +58,17 @@ public class GenericArrayList<T> implements IList<T> {
         //Make sure that we "grow" the array if needed.
         growArrayIfNeeded();
 
-        //shuffle everything up from right to left
-        //Note that this is a much easier mechanism to implement than trying to insert the new
-        //element and then shuffle everything from left to right
+        // Shuffle everything up from right to left.
+        // Note: this is a much easier mechanism to implement than trying to insert the new
+        // element and then shuffle everything from left to right
         for (int i = nextFreeLoc; i > index; i--) {
             buffer[i] = buffer[i - 1];
         }
 
-        //Now everything has moved up we can simply insert the new element
+        // Now everything has moved up we can simply insert the new element.
         buffer[index] = element;
 
-        //Obviously, we've added an extra element so we must update to reflect this
+        // Obviously, we've added an extra element, so we must update to reflect this.
         nextFreeLoc++;
     }
 
@@ -81,7 +81,7 @@ public class GenericArrayList<T> implements IList<T> {
      */
     @Override
     public T set(int index, T element) {
-        if (index > nextFreeLoc || index < 0) {
+        if (index >= nextFreeLoc || index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be outside the range");
         }
 
@@ -124,7 +124,7 @@ public class GenericArrayList<T> implements IList<T> {
     }
 
     /**
-     * @param index
+     * @param index is the location of the item in the array.
      * @return the element removed from the list
      */
     @Override
@@ -135,7 +135,8 @@ public class GenericArrayList<T> implements IList<T> {
         T removedElement = buffer[index];
         for (int i = index; i < nextFreeLoc; i++) {
             /*
-             * growArrayIfNeeded prevents ArrayIndexOutOfBoundsException if the size equals nextFreeLoc
+             * growArrayIfNeeded prevents ArrayIndexOutOfBoundsException if the size
+             * equals nextFreeLoc.
              * */
             this.growArrayIfNeeded();
             buffer[i] = buffer[i + 1];
@@ -146,7 +147,7 @@ public class GenericArrayList<T> implements IList<T> {
 
     /**
      * @param elem the element to remove
-     * @return whether the elements was removed or not
+     * @return whether the element was removed or not
      */
     @Override
     public boolean remove(T elem) {
@@ -206,17 +207,17 @@ public class GenericArrayList<T> implements IList<T> {
      */
     private void growArrayIfNeeded() {
         if (nextFreeLoc == currentCapacity) {
-            //Allocate double the space - that will keep us going for a while
+            // Allocate double the space - that will keep us going for a while.
             T[] tempArr;
             tempArr = (T[]) new Object[buffer.length * 2];
             currentCapacity *= 2;
 
-            //copy from the old space into the new
+            // Copy from the old space into the new.
             for (int i = 0; i < buffer.length; i++) {
                 tempArr[i] = buffer[i];
             }
 
-            //Now, update so that our managed array points at the newly created array
+            // Now, update so that our managed array points at the newly created array.
             buffer = tempArr;
         }
     }
@@ -242,7 +243,8 @@ public class GenericArrayList<T> implements IList<T> {
             distance += size();
         }
 
-        if(distance == 0) {
+        if(distance == 0 || size() <= 0) {
+            // if no distance to move, or if the array has 0 or 1 elements then we can jump right out of here.
             return;
         }
 
@@ -261,7 +263,7 @@ public class GenericArrayList<T> implements IList<T> {
          * (In other words, returns {@code true} if {@link #next} would
          * return an element rather than throwing an exception.)
          *
-         * @return {@code true} if the iteration has more elements
+         * @return {@code true} if the iteration has more elements.
          */
         @Override
         public boolean hasNext() {
@@ -271,7 +273,7 @@ public class GenericArrayList<T> implements IList<T> {
         /**
          * Returns the next element in the iteration.
          *
-         * @return the next element in the iteration
+         * @return the next element in the iteration.
          * @throws NoSuchElementException if the iteration has no more elements
          */
         @Override
