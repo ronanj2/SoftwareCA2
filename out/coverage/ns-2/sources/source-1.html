@@ -1,0 +1,418 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GenericArrayList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.student.l00170333.generics</a>
+</div>
+
+<h1>Coverage Summary for Class: GenericArrayList (com.student.l00170333.generics)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenericArrayList</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95%
+  </span>
+  <span class="absValue">
+    (57/60)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GenericArrayList$GenericArrayListIterator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93.9%
+  </span>
+  <span class="absValue">
+    (62/66)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.student.l00170333.generics;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.util.Iterator;
+<i class="no-highlight">4</i>&nbsp;import java.util.NoSuchElementException;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;public class GenericArrayList&lt;T&gt; implements IList&lt;T&gt; {
+<i class="no-highlight">7</i>&nbsp;    /**
+<i class="no-highlight">8</i>&nbsp;     * This will hold our data - remember an ArrayList is nothing more than a managed array
+<i class="no-highlight">9</i>&nbsp;     */
+<i class="no-highlight">10</i>&nbsp;    private T[] buffer;
+<i class="no-highlight">11</i>&nbsp;
+<i class="no-highlight">12</i>&nbsp;    /**
+<i class="no-highlight">13</i>&nbsp;     * Index of next free location - will also help us to determine if the buffer is full
+<i class="no-highlight">14</i>&nbsp;     */
+<i class="no-highlight">15</i>&nbsp;    private int nextFreeLoc;
+<i class="no-highlight">16</i>&nbsp;
+<i class="no-highlight">17</i>&nbsp;    /** This will change as buffer fills up and as we allocate more and more storage space */
+<i class="no-highlight">18</i>&nbsp;    private int currentCapacity;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    private static final int INITIAL_CAPACITY = 3;//nice and small so that we test it quickly
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    /** Default ctor */
+<b class="fc"><i class="no-highlight">23</i>&nbsp;    public GenericArrayList() {</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;        currentCapacity = INITIAL_CAPACITY;</b>
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        nextFreeLoc = 0;</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        buffer = (T[]) new Object[currentCapacity];</b>
+<i class="no-highlight">27</i>&nbsp;    }
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /** Add to the end of the list.
+<i class="no-highlight">30</i>&nbsp;     *
+<i class="no-highlight">31</i>&nbsp;     * Each time you need to grow the array you should declare a temporary array
+<i class="no-highlight">32</i>&nbsp;     * which is double the currentCapacity of buffer.
+<i class="no-highlight">33</i>&nbsp;     *
+<i class="no-highlight">34</i>&nbsp;     * Copy everything in buffer to tempArray
+<i class="no-highlight">35</i>&nbsp;     *
+<i class="no-highlight">36</i>&nbsp;     * Then update the buffer reference to refer to tempArray
+<i class="no-highlight">37</i>&nbsp;     *
+<i class="no-highlight">38</i>&nbsp;     * @param element The data to be added to the end of the managed array
+<i class="no-highlight">39</i>&nbsp;     */
+<i class="no-highlight">40</i>&nbsp;    public void add(T element)
+<i class="no-highlight">41</i>&nbsp;    {
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        growArrayIfNeeded();</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        buffer[nextFreeLoc++] = element;</b>
+<i class="no-highlight">44</i>&nbsp;    }
+<i class="no-highlight">45</i>&nbsp;
+<i class="no-highlight">46</i>&nbsp;    /**
+<i class="no-highlight">47</i>&nbsp;     * Inserts the specified element at the specified position in this list
+<i class="no-highlight">48</i>&nbsp;     *
+<i class="no-highlight">49</i>&nbsp;     * @param index   index at which the specified element is to be inserted
+<i class="no-highlight">50</i>&nbsp;     * @param element element to be inserted
+<i class="no-highlight">51</i>&nbsp;     */
+<i class="no-highlight">52</i>&nbsp;    @Override
+<i class="no-highlight">53</i>&nbsp;    public void add(int index, T element) {
+<b class="fc"><i class="no-highlight">54</i>&nbsp;        if (index &gt; nextFreeLoc || index &lt; 0) {</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Index cannot be outside the range&quot;);</b>
+<i class="no-highlight">56</i>&nbsp;        }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;        //Make sure that we &quot;grow&quot; the array if needed.
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        growArrayIfNeeded();</b>
+<i class="no-highlight">60</i>&nbsp;
+<i class="no-highlight">61</i>&nbsp;        // Shuffle everything up from right to left.
+<i class="no-highlight">62</i>&nbsp;        // Note: this is a much easier mechanism to implement than trying to insert the new
+<i class="no-highlight">63</i>&nbsp;        // element and then shuffle everything from left to right
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        for (int i = nextFreeLoc; i &gt; index; i--) {</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;            buffer[i] = buffer[i - 1];</b>
+<i class="no-highlight">66</i>&nbsp;        }
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;        // Now everything has moved up we can simply insert the new element.
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        buffer[index] = element;</b>
+<i class="no-highlight">70</i>&nbsp;
+<i class="no-highlight">71</i>&nbsp;        // Obviously, we&#39;ve added an extra element, so we must update to reflect this.
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        nextFreeLoc++;</b>
+<i class="no-highlight">73</i>&nbsp;    }
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;    /**
+<i class="no-highlight">76</i>&nbsp;     * Replaces the element at the specified position in this list with the specified element
+<i class="no-highlight">77</i>&nbsp;     *
+<i class="no-highlight">78</i>&nbsp;     * @param index index of the element to replace
+<i class="no-highlight">79</i>&nbsp;     * @param element element to be stored at the specified position
+<i class="no-highlight">80</i>&nbsp;     * @return the element previously at the specified position
+<i class="no-highlight">81</i>&nbsp;     */
+<i class="no-highlight">82</i>&nbsp;    @Override
+<i class="no-highlight">83</i>&nbsp;    public T set(int index, T element) {
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        if (index &gt;= nextFreeLoc || index &lt; 0) {</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Index cannot be outside the range&quot;);</b>
+<i class="no-highlight">86</i>&nbsp;        }
+<i class="no-highlight">87</i>&nbsp;
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        for (int i = 0; i &lt; nextFreeLoc; i++) {</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;            if (i == index) {</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                T previousElement = buffer[i];</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;                buffer[i] = element;</b>
+<i class="no-highlight">92</i>&nbsp;
+<b class="fc"><i class="no-highlight">93</i>&nbsp;                return previousElement;</b>
+<i class="no-highlight">94</i>&nbsp;            }
+<i class="no-highlight">95</i>&nbsp;        }
+<i class="no-highlight">96</i>&nbsp;
+<i class="no-highlight">97</i>&nbsp;        /* it never reaches here */
+<b class="nc"><i class="no-highlight">98</i>&nbsp;        return null;</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;
+<i class="no-highlight">101</i>&nbsp;    /**
+<i class="no-highlight">102</i>&nbsp;     * Returns the element at the specified position in this list.
+<i class="no-highlight">103</i>&nbsp;     *
+<i class="no-highlight">104</i>&nbsp;     * @param index index of the element to return
+<i class="no-highlight">105</i>&nbsp;     * @return the element at the specified position in this list
+<i class="no-highlight">106</i>&nbsp;     */
+<i class="no-highlight">107</i>&nbsp;    @Override
+<i class="no-highlight">108</i>&nbsp;    public T get(int index) {
+<b class="fc"><i class="no-highlight">109</i>&nbsp;        if (index &gt;= nextFreeLoc || index &lt; 0) {</b>
+<b class="fc"><i class="no-highlight">110</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Index cannot be outside the range&quot;);</b>
+<i class="no-highlight">111</i>&nbsp;        }
+<i class="no-highlight">112</i>&nbsp;
+<b class="fc"><i class="no-highlight">113</i>&nbsp;        return buffer[index];</b>
+<i class="no-highlight">114</i>&nbsp;    }
+<i class="no-highlight">115</i>&nbsp;
+<i class="no-highlight">116</i>&nbsp;    /**
+<i class="no-highlight">117</i>&nbsp;     * Returns the number of elements in this list.
+<i class="no-highlight">118</i>&nbsp;     *
+<i class="no-highlight">119</i>&nbsp;     * @return the number of elements in this list
+<i class="no-highlight">120</i>&nbsp;     */
+<i class="no-highlight">121</i>&nbsp;    @Override
+<i class="no-highlight">122</i>&nbsp;    public int size() {
+<b class="fc"><i class="no-highlight">123</i>&nbsp;        return nextFreeLoc;</b>
+<i class="no-highlight">124</i>&nbsp;    }
+<i class="no-highlight">125</i>&nbsp;
+<i class="no-highlight">126</i>&nbsp;    /**
+<i class="no-highlight">127</i>&nbsp;     * @param index is the location of the item in the array.
+<i class="no-highlight">128</i>&nbsp;     * @return the element removed from the list
+<i class="no-highlight">129</i>&nbsp;     */
+<i class="no-highlight">130</i>&nbsp;    @Override
+<i class="no-highlight">131</i>&nbsp;    public T remove(int index) {
+<b class="fc"><i class="no-highlight">132</i>&nbsp;        if (index &gt;= nextFreeLoc || index &lt; 0) {</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Index cannot be outside the range&quot;);</b>
+<i class="no-highlight">134</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">135</i>&nbsp;        T removedElement = buffer[index];</b>
+<b class="fc"><i class="no-highlight">136</i>&nbsp;        for (int i = index; i &lt; nextFreeLoc; i++) {</b>
+<i class="no-highlight">137</i>&nbsp;            /*
+<i class="no-highlight">138</i>&nbsp;             * growArrayIfNeeded prevents ArrayIndexOutOfBoundsException if the size
+<i class="no-highlight">139</i>&nbsp;             * equals nextFreeLoc.
+<i class="no-highlight">140</i>&nbsp;             * */
+<b class="fc"><i class="no-highlight">141</i>&nbsp;            this.growArrayIfNeeded();</b>
+<b class="fc"><i class="no-highlight">142</i>&nbsp;            buffer[i] = buffer[i + 1];</b>
+<i class="no-highlight">143</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">144</i>&nbsp;        nextFreeLoc--;</b>
+<b class="fc"><i class="no-highlight">145</i>&nbsp;        return removedElement;</b>
+<i class="no-highlight">146</i>&nbsp;    }
+<i class="no-highlight">147</i>&nbsp;
+<i class="no-highlight">148</i>&nbsp;    /**
+<i class="no-highlight">149</i>&nbsp;     * @param elem the element to remove
+<i class="no-highlight">150</i>&nbsp;     * @return whether the element was removed or not
+<i class="no-highlight">151</i>&nbsp;     */
+<i class="no-highlight">152</i>&nbsp;    @Override
+<i class="no-highlight">153</i>&nbsp;    public boolean remove(T elem) {
+<i class="no-highlight">154</i>&nbsp;
+<b class="fc"><i class="no-highlight">155</i>&nbsp;        for (int i = 0; i &lt; nextFreeLoc; i++) {</b>
+<b class="fc"><i class="no-highlight">156</i>&nbsp;            if (buffer[i].equals(elem)) {</b>
+<b class="fc"><i class="no-highlight">157</i>&nbsp;                this.remove(i);</b>
+<b class="fc"><i class="no-highlight">158</i>&nbsp;                return true;</b>
+<i class="no-highlight">159</i>&nbsp;            }
+<i class="no-highlight">160</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">161</i>&nbsp;        return false;</b>
+<i class="no-highlight">162</i>&nbsp;    }
+<i class="no-highlight">163</i>&nbsp;
+<i class="no-highlight">164</i>&nbsp;    /**
+<i class="no-highlight">165</i>&nbsp;     * Returns true if this list contains no elements.
+<i class="no-highlight">166</i>&nbsp;     *
+<i class="no-highlight">167</i>&nbsp;     * @return true if this list contains no elements
+<i class="no-highlight">168</i>&nbsp;     */
+<i class="no-highlight">169</i>&nbsp;    @Override
+<i class="no-highlight">170</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i class="no-highlight">171</i>&nbsp;        return (nextFreeLoc == 0);</b>
+<i class="no-highlight">172</i>&nbsp;    }
+<i class="no-highlight">173</i>&nbsp;
+<i class="no-highlight">174</i>&nbsp;
+<i class="no-highlight">175</i>&nbsp;    /**
+<i class="no-highlight">176</i>&nbsp;     * Searches through the array to see if a matching element is present
+<i class="no-highlight">177</i>&nbsp;     * Note: We already use this mechanism for one of the remove() methods.
+<i class="no-highlight">178</i>&nbsp;     * @param element element to search the array for
+<i class="no-highlight">179</i>&nbsp;     * @return whether the element was present in the list or not
+<i class="no-highlight">180</i>&nbsp;     */
+<i class="no-highlight">181</i>&nbsp;    @Override
+<i class="no-highlight">182</i>&nbsp;    public boolean contains(T element) {
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        for (int index = 0; index &lt; nextFreeLoc; index++) {</b>
+<b class="fc"><i class="no-highlight">184</i>&nbsp;            if (buffer[index].equals(element)) {</b>
+<b class="fc"><i class="no-highlight">185</i>&nbsp;                return true;</b>
+<i class="no-highlight">186</i>&nbsp;            }
+<i class="no-highlight">187</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">188</i>&nbsp;        return false;</b>
+<i class="no-highlight">189</i>&nbsp;    }
+<i class="no-highlight">190</i>&nbsp;
+<i class="no-highlight">191</i>&nbsp;    /**
+<i class="no-highlight">192</i>&nbsp;     * Returns an iterator over the elements in this list in proper sequence.
+<i class="no-highlight">193</i>&nbsp;     * Specified by:
+<i class="no-highlight">194</i>&nbsp;     * iterator in interface  Iterable&lt;T&gt;
+<i class="no-highlight">195</i>&nbsp;     *
+<i class="no-highlight">196</i>&nbsp;     * @return an iterator over the elements in this list in proper sequence
+<i class="no-highlight">197</i>&nbsp;     */
+<i class="no-highlight">198</i>&nbsp;    @Override
+<i class="no-highlight">199</i>&nbsp;    public Iterator&lt;T&gt; iterator() {
+<b class="fc"><i class="no-highlight">200</i>&nbsp;        return new GenericArrayListIterator();</b>
+<i class="no-highlight">201</i>&nbsp;    }
+<i class="no-highlight">202</i>&nbsp;
+<i class="no-highlight">203</i>&nbsp;    /**
+<i class="no-highlight">204</i>&nbsp;     * Private helper method to check if the currently allocated space is full.
+<i class="no-highlight">205</i>&nbsp;     * If it is then it will allocate a bigger array, copy the contents, and set our
+<i class="no-highlight">206</i>&nbsp;     * instance field (buffer) to refer to the newly allocated space.
+<i class="no-highlight">207</i>&nbsp;     */
+<i class="no-highlight">208</i>&nbsp;    private void growArrayIfNeeded() {
+<b class="fc"><i class="no-highlight">209</i>&nbsp;        if (nextFreeLoc == currentCapacity) {</b>
+<i class="no-highlight">210</i>&nbsp;            // Allocate double the space - that will keep us going for a while.
+<i class="no-highlight">211</i>&nbsp;            T[] tempArr;
+<b class="fc"><i class="no-highlight">212</i>&nbsp;            tempArr = (T[]) new Object[buffer.length * 2];</b>
+<b class="fc"><i class="no-highlight">213</i>&nbsp;            currentCapacity *= 2;</b>
+<i class="no-highlight">214</i>&nbsp;
+<i class="no-highlight">215</i>&nbsp;            // Copy from the old space into the new.
+<b class="fc"><i class="no-highlight">216</i>&nbsp;            for (int i = 0; i &lt; buffer.length; i++) {</b>
+<b class="fc"><i class="no-highlight">217</i>&nbsp;                tempArr[i] = buffer[i];</b>
+<i class="no-highlight">218</i>&nbsp;            }
+<i class="no-highlight">219</i>&nbsp;
+<i class="no-highlight">220</i>&nbsp;            // Now, update so that our managed array points at the newly created array.
+<b class="fc"><i class="no-highlight">221</i>&nbsp;            buffer = tempArr;</b>
+<i class="no-highlight">222</i>&nbsp;        }
+<i class="no-highlight">223</i>&nbsp;    }
+<i class="no-highlight">224</i>&nbsp;
+<i class="no-highlight">225</i>&nbsp;    @Override
+<i class="no-highlight">226</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">227</i>&nbsp;        StringBuilder data = new StringBuilder();</b>
+<b class="fc"><i class="no-highlight">228</i>&nbsp;        for (int i = 0; i &lt; nextFreeLoc; i++) {</b>
+<b class="fc"><i class="no-highlight">229</i>&nbsp;            data.append(buffer[i]).append(&quot;,&quot;);</b>
+<i class="no-highlight">230</i>&nbsp;        }
+<i class="no-highlight">231</i>&nbsp;
+<b class="fc"><i class="no-highlight">232</i>&nbsp;        return data.toString();</b>
+<i class="no-highlight">233</i>&nbsp;    }
+<i class="no-highlight">234</i>&nbsp;
+<i class="no-highlight">235</i>&nbsp;    /**
+<i class="no-highlight">236</i>&nbsp;     * Rotates the elements in the specified list by the specified distance.
+<i class="no-highlight">237</i>&nbsp;     *
+<i class="no-highlight">238</i>&nbsp;     * @param distance no of elements rotated by
+<i class="no-highlight">239</i>&nbsp;     */
+<i class="no-highlight">240</i>&nbsp;    @Override
+<i class="no-highlight">241</i>&nbsp;    public void rotate(int distance) {
+<b class="fc"><i class="no-highlight">242</i>&nbsp;        if(distance &lt; 0) {</b>
+<b class="fc"><i class="no-highlight">243</i>&nbsp;            distance += size();</b>
+<i class="no-highlight">244</i>&nbsp;        }
+<i class="no-highlight">245</i>&nbsp;
+<b class="fc"><i class="no-highlight">246</i>&nbsp;        if(distance == 0 || size() &lt;= 0) {</b>
+<i class="no-highlight">247</i>&nbsp;            // if no distance to move, or if the array has 0 or 1 elements then we can jump right out of here.
+<i class="no-highlight">248</i>&nbsp;            return;
+<i class="no-highlight">249</i>&nbsp;        }
+<i class="no-highlight">250</i>&nbsp;
+<i class="no-highlight">251</i>&nbsp;        T temp;
+<b class="fc"><i class="no-highlight">252</i>&nbsp;        for (int i = 0; i &lt; distance; i++) {</b>
+<b class="fc"><i class="no-highlight">253</i>&nbsp;            temp = remove(size() - 1);</b>
+<b class="fc"><i class="no-highlight">254</i>&nbsp;            add(0, temp);</b>
+<i class="no-highlight">255</i>&nbsp;        }
+<i class="no-highlight">256</i>&nbsp;    }
+<i class="no-highlight">257</i>&nbsp;
+<b class="fc"><i class="no-highlight">258</i>&nbsp;    class GenericArrayListIterator implements Iterator&lt;T&gt; {</b>
+<b class="fc"><i class="no-highlight">259</i>&nbsp;        int cursor = 0;  // the current element we are looking at</b>
+<i class="no-highlight">260</i>&nbsp;
+<i class="no-highlight">261</i>&nbsp;        /**
+<i class="no-highlight">262</i>&nbsp;         * Returns {@code true} if the iteration has more elements.
+<i class="no-highlight">263</i>&nbsp;         * (In other words, returns {@code true} if {@link #next} would
+<i class="no-highlight">264</i>&nbsp;         * return an element rather than throwing an exception.)
+<i class="no-highlight">265</i>&nbsp;         *
+<i class="no-highlight">266</i>&nbsp;         * @return {@code true} if the iteration has more elements.
+<i class="no-highlight">267</i>&nbsp;         */
+<i class="no-highlight">268</i>&nbsp;        @Override
+<i class="no-highlight">269</i>&nbsp;        public boolean hasNext() {
+<b class="fc"><i class="no-highlight">270</i>&nbsp;            return cursor &lt; nextFreeLoc;</b>
+<i class="no-highlight">271</i>&nbsp;        }
+<i class="no-highlight">272</i>&nbsp;
+<i class="no-highlight">273</i>&nbsp;        /**
+<i class="no-highlight">274</i>&nbsp;         * Returns the next element in the iteration.
+<i class="no-highlight">275</i>&nbsp;         *
+<i class="no-highlight">276</i>&nbsp;         * @return the next element in the iteration.
+<i class="no-highlight">277</i>&nbsp;         * @throws NoSuchElementException if the iteration has no more elements
+<i class="no-highlight">278</i>&nbsp;         */
+<i class="no-highlight">279</i>&nbsp;        @Override
+<i class="no-highlight">280</i>&nbsp;        public T next() {
+<b class="fc"><i class="no-highlight">281</i>&nbsp;            if (!hasNext()) {</b>
+<b class="nc"><i class="no-highlight">282</i>&nbsp;                throw new NoSuchElementException();</b>
+<i class="no-highlight">283</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">284</i>&nbsp;            return buffer[cursor++];</b>
+<i class="no-highlight">285</i>&nbsp;        }
+<i class="no-highlight">286</i>&nbsp;    }
+<i class="no-highlight">287</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-07 22:14</div>
+</div>
+</body>
+</html>

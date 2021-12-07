@@ -1,0 +1,193 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GenericQueue</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.student.l00170333.generics</a>
+</div>
+
+<h1>Coverage Summary for Class: GenericQueue (com.student.l00170333.generics)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenericQueue</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (19/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.student.l00170333.generics;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.util.Iterator;
+<i class="no-highlight">4</i>&nbsp;import java.util.NoSuchElementException;
+<i class="no-highlight">5</i>&nbsp;
+<i class="no-highlight">6</i>&nbsp;public class GenericQueue&lt;T&gt; implements IQueue&lt;T&gt;, Iterable&lt;T&gt; {
+<i class="no-highlight">7</i>&nbsp;
+<i class="no-highlight">8</i>&nbsp;    private final IList&lt;T&gt; queueData;
+<i class="no-highlight">9</i>&nbsp;
+<b class="fc"><i class="no-highlight">10</i>&nbsp;    public GenericQueue() {</b>
+<b class="fc"><i class="no-highlight">11</i>&nbsp;        queueData = new GenericArrayList&lt;&gt;();</b>
+<i class="no-highlight">12</i>&nbsp;    }
+<i class="no-highlight">13</i>&nbsp;
+<b class="fc"><i class="no-highlight">14</i>&nbsp;    public GenericQueue(IList&lt;T&gt; data) {</b>
+<b class="fc"><i class="no-highlight">15</i>&nbsp;        queueData = data;</b>
+<i class="no-highlight">16</i>&nbsp;    }
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    /**
+<i class="no-highlight">19</i>&nbsp;     * Inserts the specified element into the queue at the end
+<i class="no-highlight">20</i>&nbsp;     *
+<i class="no-highlight">21</i>&nbsp;     * @param element the element argument.
+<i class="no-highlight">22</i>&nbsp;     */
+<i class="no-highlight">23</i>&nbsp;    @Override
+<i class="no-highlight">24</i>&nbsp;    public void enqueue(T element) {
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        queueData.add(element);</b>
+<i class="no-highlight">26</i>&nbsp;    }
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    /**
+<i class="no-highlight">29</i>&nbsp;     * Retrieves and removes the head of this queue.
+<i class="no-highlight">30</i>&nbsp;     *
+<i class="no-highlight">31</i>&nbsp;     * @return the head of this queue
+<i class="no-highlight">32</i>&nbsp;     * //throw NoSuchElementException as appropriate
+<i class="no-highlight">33</i>&nbsp;     */
+<i class="no-highlight">34</i>&nbsp;    @Override
+<i class="no-highlight">35</i>&nbsp;    public T dequeue() {
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        if (empty()) {</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;            throw new NoSuchElementException();</b>
+<i class="no-highlight">38</i>&nbsp;        }
+<i class="no-highlight">39</i>&nbsp;        // receive the deleted data
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        T entry = queueData.get(0);</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        queueData.remove(0);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;        return entry;</b>
+<i class="no-highlight">43</i>&nbsp;    }
+<i class="no-highlight">44</i>&nbsp;
+<i class="no-highlight">45</i>&nbsp;    /**
+<i class="no-highlight">46</i>&nbsp;     * Retrieves, but does not remove, the head of this queue.
+<i class="no-highlight">47</i>&nbsp;     *
+<i class="no-highlight">48</i>&nbsp;     * @return the head of this queue
+<i class="no-highlight">49</i>&nbsp;     * //throw NoSuchElementException as appropriate
+<i class="no-highlight">50</i>&nbsp;     */
+<i class="no-highlight">51</i>&nbsp;    @Override
+<i class="no-highlight">52</i>&nbsp;    public T first() {
+<b class="fc"><i class="no-highlight">53</i>&nbsp;        if (empty()) {</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            throw new NoSuchElementException();</b>
+<i class="no-highlight">55</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">56</i>&nbsp;        return queueData.get(0);</b>
+<i class="no-highlight">57</i>&nbsp;    }
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;    /**
+<i class="no-highlight">60</i>&nbsp;     * Checks if this stack is empty. Essentially checks if the size is 0.
+<i class="no-highlight">61</i>&nbsp;     *
+<i class="no-highlight">62</i>&nbsp;     * @return {@code true} if and only if this stack contains 0 items.
+<i class="no-highlight">63</i>&nbsp;     * Otherwise, returns {@code false}
+<i class="no-highlight">64</i>&nbsp;     */
+<i class="no-highlight">65</i>&nbsp;    @Override
+<i class="no-highlight">66</i>&nbsp;    public boolean empty() {
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        return queueData.size() == 0;</b>
+<i class="no-highlight">68</i>&nbsp;    }
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;    @Override
+<i class="no-highlight">71</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        StringBuilder builder = new StringBuilder();</b>
+<b class="fc"><i class="no-highlight">73</i>&nbsp;        for (int i = 0; i &lt; queueData.size(); i++) {</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            builder.append(queueData.get(i)).append(&quot;,&quot;);</b>
+<i class="no-highlight">75</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        return builder.toString();</b>
+<i class="no-highlight">77</i>&nbsp;    }
+<i class="no-highlight">78</i>&nbsp;
+<i class="no-highlight">79</i>&nbsp;    /**
+<i class="no-highlight">80</i>&nbsp;     * Returns an iterator over elements of type {@code T}.
+<i class="no-highlight">81</i>&nbsp;     *
+<i class="no-highlight">82</i>&nbsp;     * @return an Iterator.
+<i class="no-highlight">83</i>&nbsp;     */
+<i class="no-highlight">84</i>&nbsp;    @Override
+<i class="no-highlight">85</i>&nbsp;    public Iterator&lt;T&gt; iterator() {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        return new GenericIteratorStackQueue&lt;&gt;(queueData);</b>
+<i class="no-highlight">87</i>&nbsp;    }
+<i class="no-highlight">88</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-07 22:14</div>
+</div>
+</body>
+</html>

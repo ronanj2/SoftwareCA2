@@ -1,0 +1,493 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > GenericLinkedList</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.student.l00170333.generics</a>
+</div>
+
+<h1>Coverage Summary for Class: GenericLinkedList (com.student.l00170333.generics)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GenericLinkedList</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.4%
+  </span>
+  <span class="absValue">
+    (17/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    89.2%
+  </span>
+  <span class="absValue">
+    (83/93)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">GenericLinkedList$GenericLinkedListIterator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">GenericLinkedList$Node</td>
+<td class="coverageStat">
+  <span class="percent">
+    16.7%
+  </span>
+  <span class="absValue">
+    (1/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    30%
+  </span>
+  <span class="absValue">
+    (3/10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    77.8%
+  </span>
+  <span class="absValue">
+    (21/27)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.8%
+  </span>
+  <span class="absValue">
+    (93/111)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.student.l00170333.generics;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import java.util.Iterator;
+<i class="no-highlight">4</i>&nbsp;import java.util.NoSuchElementException;
+<i class="no-highlight">5</i>&nbsp;
+<b class="fc"><i class="no-highlight">6</i>&nbsp;public class GenericLinkedList&lt;T&gt; implements IList&lt;T&gt; {</b>
+<i class="no-highlight">7</i>&nbsp;    private int counter;
+<b class="fc"><i class="no-highlight">8</i>&nbsp;    private Node head = null;</b>
+<b class="fc"><i class="no-highlight">9</i>&nbsp;    private Node tail = null;</b>
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;    /**
+<i class="no-highlight">12</i>&nbsp;     * Add an element to the end of the list
+<i class="no-highlight">13</i>&nbsp;     *
+<i class="no-highlight">14</i>&nbsp;     * @param elem element to be added
+<i class="no-highlight">15</i>&nbsp;     */
+<i class="no-highlight">16</i>&nbsp;    @Override
+<i class="no-highlight">17</i>&nbsp;    public void add(T elem) {
+<b class="fc"><i class="no-highlight">18</i>&nbsp;        Node last = tail;</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        Node newNode = new Node(elem);</b>
+<i class="no-highlight">20</i>&nbsp;
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        tail = newNode;</b>
+<i class="no-highlight">22</i>&nbsp;
+<b class="fc"><i class="no-highlight">23</i>&nbsp;        if (last == null) {</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;            head = newNode;</b>
+<i class="no-highlight">25</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">26</i>&nbsp;            last.next = newNode;</b>
+<i class="no-highlight">27</i>&nbsp;        }
+<i class="no-highlight">28</i>&nbsp;
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        incrementCounter();</b>
+<i class="no-highlight">30</i>&nbsp;    }
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    /**
+<i class="no-highlight">33</i>&nbsp;     * Inserts the specified element at the specified position in this list
+<i class="no-highlight">34</i>&nbsp;     *
+<i class="no-highlight">35</i>&nbsp;     * @param index   index at which the specified element is to be inserted
+<i class="no-highlight">36</i>&nbsp;     * @param element element to be inserted
+<i class="no-highlight">37</i>&nbsp;     */
+<i class="no-highlight">38</i>&nbsp;    @Override
+<i class="no-highlight">39</i>&nbsp;    public void add(int index, T element) {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        if (index &lt; 0 || index &gt; size()) {</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Invalid index&quot;);</b>
+<i class="no-highlight">42</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        if (index == 0) {</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;            addToStart(element);</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        } else if (index == size()) {</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;            add(element);</b>
+<i class="no-highlight">47</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;            Node newNode = new Node(element);</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;            Node prevNode = getNode(index - 1);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;            Node nextNode = getNode(index);</b>
+<i class="no-highlight">51</i>&nbsp;
+<b class="fc"><i class="no-highlight">52</i>&nbsp;            prevNode.next = newNode;</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;            newNode.next = nextNode;</b>
+<b class="fc"><i class="no-highlight">54</i>&nbsp;            incrementCounter();</b>
+<i class="no-highlight">55</i>&nbsp;        }
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    /**
+<i class="no-highlight">59</i>&nbsp;     * Add an element to the start of the list
+<i class="no-highlight">60</i>&nbsp;     *
+<i class="no-highlight">61</i>&nbsp;     * @param elem element to be added
+<i class="no-highlight">62</i>&nbsp;     */
+<i class="no-highlight">63</i>&nbsp;    public void addToStart(T elem) {
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        Node newNode = new Node(elem);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        newNode.next = head;</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        head = newNode;</b>
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;        // If this is the first element for the list, we must also set the tail.
+<b class="fc"><i class="no-highlight">69</i>&nbsp;        if (size() == 0)</b>
+<b class="fc"><i class="no-highlight">70</i>&nbsp;            tail = newNode;</b>
+<i class="no-highlight">71</i>&nbsp;
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        incrementCounter();</b>
+<i class="no-highlight">73</i>&nbsp;    }
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;    /**
+<i class="no-highlight">76</i>&nbsp;     * Replaces the element at the specified position in this list with the specified element
+<i class="no-highlight">77</i>&nbsp;     *
+<i class="no-highlight">78</i>&nbsp;     * @param index   index of the element to replace
+<i class="no-highlight">79</i>&nbsp;     * @param element element to be stored at the specified position
+<i class="no-highlight">80</i>&nbsp;     * @return the element previously at the specified position
+<i class="no-highlight">81</i>&nbsp;     */
+<i class="no-highlight">82</i>&nbsp;    @Override
+<i class="no-highlight">83</i>&nbsp;    public T set(int index, T element) {
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        Node node = getNode(index);</b>
+<b class="fc"><i class="no-highlight">85</i>&nbsp;        assert node != null;</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        T prevData = node.data;</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        node.data = element;</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        return prevData;</b>
+<i class="no-highlight">89</i>&nbsp;    }
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;    /**
+<i class="no-highlight">92</i>&nbsp;     * Returns the element at the specified position in this list.
+<i class="no-highlight">93</i>&nbsp;     *
+<i class="no-highlight">94</i>&nbsp;     * @param index index of the element to return
+<i class="no-highlight">95</i>&nbsp;     * @return the element at the specified position in this list
+<i class="no-highlight">96</i>&nbsp;     */
+<i class="no-highlight">97</i>&nbsp;    @Override
+<i class="no-highlight">98</i>&nbsp;    public T get(int index) {
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        if(index == size() - 1) {</b>
+<b class="fc"><i class="no-highlight">100</i>&nbsp;            return tail.data;</b>
+<i class="no-highlight">101</i>&nbsp;        }
+<i class="no-highlight">102</i>&nbsp;
+<b class="fc"><i class="no-highlight">103</i>&nbsp;        Node node = getNode(index);</b>
+<b class="fc"><i class="no-highlight">104</i>&nbsp;        return (node == null) ? null : node.data;</b>
+<i class="no-highlight">105</i>&nbsp;    }
+<i class="no-highlight">106</i>&nbsp;
+<i class="no-highlight">107</i>&nbsp;    /**
+<i class="no-highlight">108</i>&nbsp;     * Returns the element at the specified position in this list.
+<i class="no-highlight">109</i>&nbsp;     *
+<i class="no-highlight">110</i>&nbsp;     * @param index index of the element to return
+<i class="no-highlight">111</i>&nbsp;     * @return Node specified position in this list
+<i class="no-highlight">112</i>&nbsp;     */
+<i class="no-highlight">113</i>&nbsp;    private Node getNode(int index) {
+<b class="fc"><i class="no-highlight">114</i>&nbsp;        if (index &lt; 0 || index &gt;= size()) {</b>
+<b class="fc"><i class="no-highlight">115</i>&nbsp;            throw new IndexOutOfBoundsException(&quot;Invalid index&quot;);</b>
+<i class="no-highlight">116</i>&nbsp;        }
+<i class="no-highlight">117</i>&nbsp;
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        Node current = head;</b>
+<b class="fc"><i class="no-highlight">119</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i class="no-highlight">120</i>&nbsp;        while (current != null) {</b>
+<b class="fc"><i class="no-highlight">121</i>&nbsp;            if (i == index) {</b>
+<b class="fc"><i class="no-highlight">122</i>&nbsp;                return current;</b>
+<i class="no-highlight">123</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">124</i>&nbsp;            current = current.next;</b>
+<b class="fc"><i class="no-highlight">125</i>&nbsp;            i++;</b>
+<i class="no-highlight">126</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">127</i>&nbsp;        return null;</b>
+<i class="no-highlight">128</i>&nbsp;    }
+<i class="no-highlight">129</i>&nbsp;
+<i class="no-highlight">130</i>&nbsp;    public int size() {
+<b class="fc"><i class="no-highlight">131</i>&nbsp;        return counter;</b>
+<i class="no-highlight">132</i>&nbsp;    }
+<i class="no-highlight">133</i>&nbsp;
+<i class="no-highlight">134</i>&nbsp;    private void incrementCounter() {
+<b class="fc"><i class="no-highlight">135</i>&nbsp;        counter++;</b>
+<i class="no-highlight">136</i>&nbsp;    }
+<i class="no-highlight">137</i>&nbsp;
+<i class="no-highlight">138</i>&nbsp;    private void decrementCounter() {
+<b class="fc"><i class="no-highlight">139</i>&nbsp;        counter--;</b>
+<i class="no-highlight">140</i>&nbsp;    }
+<i class="no-highlight">141</i>&nbsp;
+<i class="no-highlight">142</i>&nbsp;    /**
+<i class="no-highlight">143</i>&nbsp;     * @param index the element to remove
+<i class="no-highlight">144</i>&nbsp;     * @return the element removed from the list
+<i class="no-highlight">145</i>&nbsp;     */
+<i class="no-highlight">146</i>&nbsp;    @Override
+<i class="no-highlight">147</i>&nbsp;    public T remove(int index) {
+<b class="fc"><i class="no-highlight">148</i>&nbsp;        Node deletedNode = getNode(index);</b>
+<i class="no-highlight">149</i>&nbsp;        Node prevNode;
+<i class="no-highlight">150</i>&nbsp;
+<b class="fc"><i class="no-highlight">151</i>&nbsp;        if (index == 0) {</b>
+<b class="fc"><i class="no-highlight">152</i>&nbsp;            prevNode = head.next;</b>
+<b class="fc"><i class="no-highlight">153</i>&nbsp;            head = prevNode;</b>
+<i class="no-highlight">154</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">155</i>&nbsp;            prevNode = getNode(index - 1);</b>
+<i class="no-highlight">156</i>&nbsp;        }
+<i class="no-highlight">157</i>&nbsp;
+<b class="fc"><i class="no-highlight">158</i>&nbsp;        if (prevNode == null) {</b>
+<b class="nc"><i class="no-highlight">159</i>&nbsp;            tail = null;</b>
+<b class="fc"><i class="no-highlight">160</i>&nbsp;        } else if (index + 1 &gt;= size()) {</b>
+<b class="fc"><i class="no-highlight">161</i>&nbsp;            prevNode.next = null;</b>
+<b class="fc"><i class="no-highlight">162</i>&nbsp;            tail = prevNode;</b>
+<i class="no-highlight">163</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">164</i>&nbsp;            prevNode.next = getNode(index + 1);</b>
+<i class="no-highlight">165</i>&nbsp;        }
+<i class="no-highlight">166</i>&nbsp;
+<b class="fc"><i class="no-highlight">167</i>&nbsp;        decrementCounter();</b>
+<b class="fc"><i class="no-highlight">168</i>&nbsp;        return deletedNode.data;</b>
+<i class="no-highlight">169</i>&nbsp;    }
+<i class="no-highlight">170</i>&nbsp;
+<i class="no-highlight">171</i>&nbsp;    /**
+<i class="no-highlight">172</i>&nbsp;     * @param elem the element to remove
+<i class="no-highlight">173</i>&nbsp;     * @return whether the element was removed or not
+<i class="no-highlight">174</i>&nbsp;     */
+<i class="no-highlight">175</i>&nbsp;    @Override
+<i class="no-highlight">176</i>&nbsp;    public boolean remove(T elem) {
+<b class="nc"><i class="no-highlight">177</i>&nbsp;        if (isEmpty()) {</b>
+<b class="nc"><i class="no-highlight">178</i>&nbsp;            return false;</b>
+<i class="no-highlight">179</i>&nbsp;        }
+<i class="no-highlight">180</i>&nbsp;
+<b class="nc"><i class="no-highlight">181</i>&nbsp;        int index = getNodeIndex(elem);</b>
+<b class="nc"><i class="no-highlight">182</i>&nbsp;        if (index &lt; 0) {</b>
+<b class="nc"><i class="no-highlight">183</i>&nbsp;            return false;</b>
+<i class="no-highlight">184</i>&nbsp;        }
+<i class="no-highlight">185</i>&nbsp;
+<b class="nc"><i class="no-highlight">186</i>&nbsp;        remove(index);</b>
+<b class="nc"><i class="no-highlight">187</i>&nbsp;        return true;</b>
+<i class="no-highlight">188</i>&nbsp;    }
+<i class="no-highlight">189</i>&nbsp;
+<i class="no-highlight">190</i>&nbsp;    /**
+<i class="no-highlight">191</i>&nbsp;     * Returns true if this list contains no elements.
+<i class="no-highlight">192</i>&nbsp;     *
+<i class="no-highlight">193</i>&nbsp;     * @return true if this list contains no elements
+<i class="no-highlight">194</i>&nbsp;     */
+<i class="no-highlight">195</i>&nbsp;    @Override
+<i class="no-highlight">196</i>&nbsp;    public boolean isEmpty() {
+<b class="fc"><i class="no-highlight">197</i>&nbsp;        return size() == 0;</b>
+<i class="no-highlight">198</i>&nbsp;    }
+<i class="no-highlight">199</i>&nbsp;
+<i class="no-highlight">200</i>&nbsp;    /**
+<i class="no-highlight">201</i>&nbsp;     * This is new (to the interface) but should be straightforward to implement
+<i class="no-highlight">202</i>&nbsp;     *
+<i class="no-highlight">203</i>&nbsp;     * @param element the element to search found
+<i class="no-highlight">204</i>&nbsp;     * @return whether the element was found or not
+<i class="no-highlight">205</i>&nbsp;     */
+<i class="no-highlight">206</i>&nbsp;    @Override
+<i class="no-highlight">207</i>&nbsp;    public boolean contains(T element) {
+<b class="fc"><i class="no-highlight">208</i>&nbsp;        return getNodeIndex(element) &gt;= 0;</b>
+<i class="no-highlight">209</i>&nbsp;    }
+<i class="no-highlight">210</i>&nbsp;
+<i class="no-highlight">211</i>&nbsp;    /**
+<i class="no-highlight">212</i>&nbsp;     * This return index
+<i class="no-highlight">213</i>&nbsp;     * @param element the element to search found
+<i class="no-highlight">214</i>&nbsp;     * @return index
+<i class="no-highlight">215</i>&nbsp;     */
+<i class="no-highlight">216</i>&nbsp;    private int getNodeIndex(T element) {
+<b class="fc"><i class="no-highlight">217</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i class="no-highlight">218</i>&nbsp;        Node current = head;</b>
+<b class="fc"><i class="no-highlight">219</i>&nbsp;        while (current != null) {</b>
+<b class="fc"><i class="no-highlight">220</i>&nbsp;            if (current.data.equals(element)) {</b>
+<b class="fc"><i class="no-highlight">221</i>&nbsp;                return i;</b>
+<i class="no-highlight">222</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">223</i>&nbsp;            current = current.next;</b>
+<b class="fc"><i class="no-highlight">224</i>&nbsp;            i++;</b>
+<i class="no-highlight">225</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">226</i>&nbsp;        return -1;</b>
+<i class="no-highlight">227</i>&nbsp;    }
+<i class="no-highlight">228</i>&nbsp;
+<i class="no-highlight">229</i>&nbsp;    /* Linked list Node*/
+<i class="no-highlight">230</i>&nbsp;    private class Node {
+<i class="no-highlight">231</i>&nbsp;        // reference to the next node in the chain, or null if there isn&#39;t one.
+<i class="no-highlight">232</i>&nbsp;        Node next;
+<i class="no-highlight">233</i>&nbsp;
+<i class="no-highlight">234</i>&nbsp;        // data carried by this node. could be of any type you need.
+<i class="no-highlight">235</i>&nbsp;        T data;
+<i class="no-highlight">236</i>&nbsp;
+<i class="no-highlight">237</i>&nbsp;        // Node constructor
+<b class="fc"><i class="no-highlight">238</i>&nbsp;        public Node(T dataValue) {</b>
+<b class="fc"><i class="no-highlight">239</i>&nbsp;            next = null;</b>
+<b class="fc"><i class="no-highlight">240</i>&nbsp;            data = dataValue;</b>
+<i class="no-highlight">241</i>&nbsp;        }
+<i class="no-highlight">242</i>&nbsp;
+<i class="no-highlight">243</i>&nbsp;        // another Node constructor if we want to specify the node to point to.
+<b class="nc"><i class="no-highlight">244</i>&nbsp;        public Node(T dataValue, Node nextValue) {</b>
+<b class="nc"><i class="no-highlight">245</i>&nbsp;            next = nextValue;</b>
+<b class="nc"><i class="no-highlight">246</i>&nbsp;            data = dataValue;</b>
+<i class="no-highlight">247</i>&nbsp;        }
+<i class="no-highlight">248</i>&nbsp;
+<i class="no-highlight">249</i>&nbsp;        public T getData() {
+<b class="nc"><i class="no-highlight">250</i>&nbsp;            return data;</b>
+<i class="no-highlight">251</i>&nbsp;        }
+<i class="no-highlight">252</i>&nbsp;
+<i class="no-highlight">253</i>&nbsp;        public void setData(T dataValue) {
+<b class="nc"><i class="no-highlight">254</i>&nbsp;            data = dataValue;</b>
+<i class="no-highlight">255</i>&nbsp;        }
+<i class="no-highlight">256</i>&nbsp;
+<i class="no-highlight">257</i>&nbsp;        public Node getNext() {
+<b class="nc"><i class="no-highlight">258</i>&nbsp;            return next;</b>
+<i class="no-highlight">259</i>&nbsp;        }
+<i class="no-highlight">260</i>&nbsp;
+<i class="no-highlight">261</i>&nbsp;        public void setNext(Node nextValue) {
+<b class="nc"><i class="no-highlight">262</i>&nbsp;            next = nextValue;</b>
+<i class="no-highlight">263</i>&nbsp;        }
+<i class="no-highlight">264</i>&nbsp;    }
+<i class="no-highlight">265</i>&nbsp;
+<i class="no-highlight">266</i>&nbsp;    /**
+<i class="no-highlight">267</i>&nbsp;     * Returns an iterator over the elements in this list in proper sequence.
+<i class="no-highlight">268</i>&nbsp;     * Specified by:
+<i class="no-highlight">269</i>&nbsp;     * iterator in interface  Iterable&lt;T&gt;
+<i class="no-highlight">270</i>&nbsp;     *
+<i class="no-highlight">271</i>&nbsp;     * @return an iterator over the elements in this list in proper sequence
+<i class="no-highlight">272</i>&nbsp;     */
+<i class="no-highlight">273</i>&nbsp;    @Override
+<i class="no-highlight">274</i>&nbsp;    public Iterator&lt;T&gt; iterator() {
+<i class="no-highlight">275</i>&nbsp;        //
+<b class="fc"><i class="no-highlight">276</i>&nbsp;        return new GenericLinkedListIterator();</b>
+<i class="no-highlight">277</i>&nbsp;    }
+<i class="no-highlight">278</i>&nbsp;
+<i class="no-highlight">279</i>&nbsp;    /**
+<i class="no-highlight">280</i>&nbsp;     * Rotates the elements in the specified list by the specified distance.
+<i class="no-highlight">281</i>&nbsp;     *
+<i class="no-highlight">282</i>&nbsp;     * @param distance to rotate
+<i class="no-highlight">283</i>&nbsp;     */
+<i class="no-highlight">284</i>&nbsp;    @Override
+<i class="no-highlight">285</i>&nbsp;    public void rotate(int distance) {
+<i class="no-highlight">286</i>&nbsp;        T temp;
+<b class="fc"><i class="no-highlight">287</i>&nbsp;        if(distance &lt; 0) {</b>
+<b class="fc"><i class="no-highlight">288</i>&nbsp;            distance += size();</b>
+<i class="no-highlight">289</i>&nbsp;        }
+<i class="no-highlight">290</i>&nbsp;
+<b class="fc"><i class="no-highlight">291</i>&nbsp;        if(distance == 0) {</b>
+<i class="no-highlight">292</i>&nbsp;            return;
+<i class="no-highlight">293</i>&nbsp;        }
+<i class="no-highlight">294</i>&nbsp;
+<b class="fc"><i class="no-highlight">295</i>&nbsp;        for (int i = 0; i &lt; distance; i++) {</b>
+<b class="fc"><i class="no-highlight">296</i>&nbsp;            temp = remove(size() - 1);</b>
+<b class="fc"><i class="no-highlight">297</i>&nbsp;            add(0, temp);</b>
+<i class="no-highlight">298</i>&nbsp;        }
+<i class="no-highlight">299</i>&nbsp;    }
+<i class="no-highlight">300</i>&nbsp;
+<i class="no-highlight">301</i>&nbsp;    @Override
+<i class="no-highlight">302</i>&nbsp;    public String toString() {
+<b class="fc"><i class="no-highlight">303</i>&nbsp;        Node current = head;</b>
+<b class="fc"><i class="no-highlight">304</i>&nbsp;        StringBuilder string = new StringBuilder();</b>
+<b class="fc"><i class="no-highlight">305</i>&nbsp;        while (current != null) {</b>
+<b class="fc"><i class="no-highlight">306</i>&nbsp;            string.append(current.data).append(&quot;,&quot;);</b>
+<b class="fc"><i class="no-highlight">307</i>&nbsp;            current = current.next;</b>
+<i class="no-highlight">308</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">309</i>&nbsp;        return string.toString();</b>
+<i class="no-highlight">310</i>&nbsp;    }
+<i class="no-highlight">311</i>&nbsp;
+<b class="fc"><i class="no-highlight">312</i>&nbsp;    class GenericLinkedListIterator implements Iterator&lt;T&gt; {</b>
+<b class="fc"><i class="no-highlight">313</i>&nbsp;        Node current = head;</b>
+<i class="no-highlight">314</i>&nbsp;
+<i class="no-highlight">315</i>&nbsp;        /**
+<i class="no-highlight">316</i>&nbsp;         * Returns {@code true} if the iteration has more elements.
+<i class="no-highlight">317</i>&nbsp;         * (In other words, returns {@code true} if {@link #next} would
+<i class="no-highlight">318</i>&nbsp;         * return an element rather than throwing an exception.)
+<i class="no-highlight">319</i>&nbsp;         *
+<i class="no-highlight">320</i>&nbsp;         * @return {@code true} if the iteration has more elements
+<i class="no-highlight">321</i>&nbsp;         */
+<i class="no-highlight">322</i>&nbsp;        @Override
+<i class="no-highlight">323</i>&nbsp;        public boolean hasNext() {
+<b class="fc"><i class="no-highlight">324</i>&nbsp;            return current != null;</b>
+<i class="no-highlight">325</i>&nbsp;        }
+<i class="no-highlight">326</i>&nbsp;
+<i class="no-highlight">327</i>&nbsp;        /**
+<i class="no-highlight">328</i>&nbsp;         * Returns the next element in the iteration.
+<i class="no-highlight">329</i>&nbsp;         *
+<i class="no-highlight">330</i>&nbsp;         * @return the next element in the iteration
+<i class="no-highlight">331</i>&nbsp;         * @throws NoSuchElementException if the iteration has no more elements
+<i class="no-highlight">332</i>&nbsp;         */
+<i class="no-highlight">333</i>&nbsp;        @Override
+<i class="no-highlight">334</i>&nbsp;        public T next() {
+<b class="fc"><i class="no-highlight">335</i>&nbsp;            if(!hasNext()) {</b>
+<b class="nc"><i class="no-highlight">336</i>&nbsp;                throw new NoSuchElementException();</b>
+<i class="no-highlight">337</i>&nbsp;            }
+<b class="fc"><i class="no-highlight">338</i>&nbsp;            T data = current.data;</b>
+<b class="fc"><i class="no-highlight">339</i>&nbsp;            current = current.next;</b>
+<b class="fc"><i class="no-highlight">340</i>&nbsp;            return data;</b>
+<i class="no-highlight">341</i>&nbsp;        }
+<i class="no-highlight">342</i>&nbsp;    }
+<i class="no-highlight">343</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-12-07 22:14</div>
+</div>
+</body>
+</html>
