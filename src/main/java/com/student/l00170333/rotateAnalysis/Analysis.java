@@ -53,6 +53,12 @@ public class Analysis<T> {
         return ElapsedTime();
     }
 
+    public long rotateCollection2(int distance) {
+        Start();
+        GenericCollections.rotate2(convertInstanceOfObject(list), 3);
+        return ElapsedTime();
+    }
+
     public static <T> T convertInstanceOfObject(Object o) {
         try {
             T rv = (T)o;
