@@ -16,7 +16,6 @@ class InfixCalculatorTest {
         assertEquals(5, InfixCalculator.evaluate("( ((  4 +  1 ) * 2) / 2  ) "));
         assertEquals(45, InfixCalculator.evaluate("((10 + 5) * 3)"));
         assertEquals(45, InfixCalculator.evaluate("((1 0 + 5       ) * 3)"));
-        assertEquals(45, InfixCalculator.evaluate("(2/0)"));
 
         // Test that exception is thrown when invalid characters are found in the expression.
         assertThrows(NumberFormatException.class, () -> InfixCalculator.evaluate("(abc * 2 + 3)"));
