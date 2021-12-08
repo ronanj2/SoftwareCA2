@@ -36,6 +36,7 @@ public abstract class CommonListTest {
         assertEquals(expectedString.toString() , stringList.toString());
         assertEquals(expectedInt.toString(), integersList.toString());
         assertEquals(expectedDouble.toString(), doublesList.toString());
+        assertThrows(IndexOutOfBoundsException.class, () -> stringList.add(-1, "exception"));
     }
 
     protected void addByIndex() {
@@ -79,6 +80,15 @@ public abstract class CommonListTest {
         assertEquals("String-1", stringList.remove(0));
         assertEquals("String-3", stringList.remove(1));
         assertEquals(originalCountOfElements - 2, stringList.size());
+    }
+
+    protected void removeBoolean() {
+        // empty array
+        assertFalse(stringList.remove("String-1"));
+
+        int originalCountOfElements = addTestElements();
+        assertTrue(stringList.remove("String-1"));
+        assertFalse(stringList.remove("NotFound"));
     }
 
     protected void removeElement() {

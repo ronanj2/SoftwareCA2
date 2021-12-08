@@ -22,7 +22,7 @@ and the tests can be found here: https://github.com/ronanj2/SoftwareCA2/tree/mai
 
 ### Test Coverage
 We have excellent test coverage with all classes and methods covered.  
-<img src="https://user-images.githubusercontent.com/74976200/145113291-2cfa948a-bb45-4130-b92e-5522bd520059.png" width="500">  
+<img src="https://user-images.githubusercontent.com/74976200/145305197-a27717c9-d665-44f7-a94d-f241e8e8a4e3.png" width="500">  
 <sub>Figure 1 - Test Coverage </sub>
 
 A test coverage report can be found in the out directory here: https://github.com/ronanj2/SoftwareCA2/tree/main/out/coverage - This report can be opened in a browser and will provide coloured overlay showing the classes/methods/lines covered.

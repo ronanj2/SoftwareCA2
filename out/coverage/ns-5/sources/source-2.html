@@ -61,7 +61,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     0%
   </span>
   <span class="absValue">
-    (0/43)
+    (0/85)
   </span>
 </td>
 </tr>
@@ -88,67 +88,125 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">13</i>&nbsp;        long timeTaken;
 <b class="nc"><i class="no-highlight">14</i>&nbsp;        int arraySize = 5000;</b>
 <b class="nc"><i class="no-highlight">15</i>&nbsp;        int rotateDistance = 10;</b>
-<i class="no-highlight">16</i>&nbsp;
-<i class="no-highlight">17</i>&nbsp;        // GenericArrayList adding
-<b class="nc"><i class="no-highlight">18</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">19</i>&nbsp;            arrayListAnalysis = new Analysis&lt;&gt;(arraySize, new GenericArrayList&lt;&gt;());</b>
-<b class="nc"><i class="no-highlight">20</i>&nbsp;            timeTaken = arrayListAnalysis.addElementsToArray();</b>
-<b class="nc"><i class="no-highlight">21</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:addElementsToArray() - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">22</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, i, timeTaken));</b>
-<i class="no-highlight">23</i>&nbsp;        }
-<i class="no-highlight">24</i>&nbsp;
-<b class="nc"><i class="no-highlight">25</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<b class="nc"><i class="no-highlight">26</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<i class="no-highlight">27</i>&nbsp;
-<i class="no-highlight">28</i>&nbsp;        // GenericLinkedList adding
-<b class="nc"><i class="no-highlight">29</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">30</i>&nbsp;            linkedListAnalysis = new Analysis&lt;&gt;(arraySize, new GenericLinkedList&lt;&gt;());</b>
-<b class="nc"><i class="no-highlight">31</i>&nbsp;            timeTaken = linkedListAnalysis.addElementsToArray();</b>
-<b class="nc"><i class="no-highlight">32</i>&nbsp;            System.out.println(String.format(&quot;LinkedList:addElementsToArray()  - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">33</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, i, timeTaken));</b>
-<i class="no-highlight">34</i>&nbsp;        }
-<i class="no-highlight">35</i>&nbsp;
-<b class="nc"><i class="no-highlight">36</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<b class="nc"><i class="no-highlight">37</i>&nbsp;        System.out.println(&quot;**rotate comparisons**&quot;);</b>
-<i class="no-highlight">38</i>&nbsp;
-<i class="no-highlight">39</i>&nbsp;        // GenericArrayList rotate
-<b class="nc"><i class="no-highlight">40</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">41</i>&nbsp;            timeTaken = arrayListAnalysis.rotate(rotateDistance);</b>
-<b class="nc"><i class="no-highlight">42</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:rotate(%s)  - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">43</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, rotateDistance, i, timeTaken));</b>
-<i class="no-highlight">44</i>&nbsp;        }
-<i class="no-highlight">45</i>&nbsp;
-<b class="nc"><i class="no-highlight">46</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<b class="nc"><i class="no-highlight">47</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<i class="no-highlight">48</i>&nbsp;
-<i class="no-highlight">49</i>&nbsp;        // GenericLinkedList rotate
-<b class="nc"><i class="no-highlight">50</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">51</i>&nbsp;            timeTaken = linkedListAnalysis.rotate(rotateDistance);</b>
-<b class="nc"><i class="no-highlight">52</i>&nbsp;            System.out.println(String.format(&quot;GenericLinkedList:rotate(%s)  - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">53</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;        long totalTime = 0;</b>
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;        // GenericArrayList adding
+<b class="nc"><i class="no-highlight">19</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">20</i>&nbsp;            arrayListAnalysis = new Analysis&lt;&gt;(arraySize, new GenericArrayList&lt;&gt;());</b>
+<b class="nc"><i class="no-highlight">21</i>&nbsp;            timeTaken = arrayListAnalysis.addElementsToArray();</b>
+<b class="nc"><i class="no-highlight">22</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:addElementsToArray() - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">23</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">24</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">25</i>&nbsp;        }
+<i class="no-highlight">26</i>&nbsp;
+<b class="nc"><i class="no-highlight">27</i>&nbsp;        System.out.println(String.format(&quot;GenericArrayList:addElementsToArray() - average: %s?s&quot;, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">29</i>&nbsp;
+<b class="nc"><i class="no-highlight">30</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">31</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<i class="no-highlight">32</i>&nbsp;
+<i class="no-highlight">33</i>&nbsp;        // GenericLinkedList adding
+<b class="nc"><i class="no-highlight">34</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;            linkedListAnalysis = new Analysis&lt;&gt;(arraySize, new GenericLinkedList&lt;&gt;());</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;            timeTaken = linkedListAnalysis.addElementsToArray();</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;            System.out.println(String.format(&quot;LinkedList:addElementsToArray()  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">38</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">39</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">40</i>&nbsp;        }
+<i class="no-highlight">41</i>&nbsp;
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        System.out.println(String.format(&quot;LinkedList:addElementsToArray() - average: %s ?s&quot;, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">44</i>&nbsp;
+<b class="nc"><i class="no-highlight">45</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;        System.out.println(&quot;**rotate comparisons**&quot;);</b>
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;        // GenericArrayList rotate
+<b class="nc"><i class="no-highlight">49</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">50</i>&nbsp;            timeTaken = arrayListAnalysis.rotate(rotateDistance);</b>
+<b class="nc"><i class="no-highlight">51</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:rotate(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">53</i>&nbsp;            totalTime += timeTaken;</b>
 <i class="no-highlight">54</i>&nbsp;        }
 <i class="no-highlight">55</i>&nbsp;
-<b class="nc"><i class="no-highlight">56</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<b class="nc"><i class="no-highlight">57</i>&nbsp;        System.out.println(&quot;**collection rotate**&quot;);</b>
-<i class="no-highlight">58</i>&nbsp;
-<i class="no-highlight">59</i>&nbsp;        // GenericArrayList rotate
-<b class="nc"><i class="no-highlight">60</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">61</i>&nbsp;            timeTaken = arrayListAnalysis.rotateCollection(2);</b>
-<b class="nc"><i class="no-highlight">62</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:rotateCollection(%s)  - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">63</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, rotateDistance, i, timeTaken));</b>
-<i class="no-highlight">64</i>&nbsp;        }
-<i class="no-highlight">65</i>&nbsp;
-<b class="nc"><i class="no-highlight">66</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<b class="nc"><i class="no-highlight">67</i>&nbsp;        System.out.println(&quot;&quot;);</b>
-<i class="no-highlight">68</i>&nbsp;
-<i class="no-highlight">69</i>&nbsp;        // GenericLinkedList rotate
-<b class="nc"><i class="no-highlight">70</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
-<b class="nc"><i class="no-highlight">71</i>&nbsp;            timeTaken = linkedListAnalysis.rotateCollection(2);</b>
-<b class="nc"><i class="no-highlight">72</i>&nbsp;            System.out.println(String.format(&quot;GenericLinkedList:rotateCollection(%s)  - run %s &quot; +</b>
-<b class="nc"><i class="no-highlight">73</i>&nbsp;                    &quot;- time taken: %s microseconds.&quot;, rotateDistance, i, timeTaken));</b>
-<i class="no-highlight">74</i>&nbsp;        }
-<i class="no-highlight">75</i>&nbsp;    }
-<i class="no-highlight">76</i>&nbsp;}
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        System.out.println(String.format(&quot;GenericArrayList:rotate(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">59</i>&nbsp;
+<b class="nc"><i class="no-highlight">60</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;        // GenericLinkedList rotate
+<b class="nc"><i class="no-highlight">64</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">65</i>&nbsp;            timeTaken = linkedListAnalysis.rotate(rotateDistance);</b>
+<b class="nc"><i class="no-highlight">66</i>&nbsp;            System.out.println(String.format(&quot;GenericLinkedList:rotate(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">69</i>&nbsp;        }
+<i class="no-highlight">70</i>&nbsp;
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        System.out.println(String.format(&quot;GenericLinkedList:rotate(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">74</i>&nbsp;
+<b class="nc"><i class="no-highlight">75</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        System.out.println(&quot;**collection rotate**&quot;);</b>
+<i class="no-highlight">77</i>&nbsp;
+<i class="no-highlight">78</i>&nbsp;        // GenericArrayList rotate
+<b class="nc"><i class="no-highlight">79</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;            timeTaken = arrayListAnalysis.rotateCollection(2);</b>
+<b class="nc"><i class="no-highlight">81</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:rotateCollection(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">82</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">83</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">84</i>&nbsp;        }
+<i class="no-highlight">85</i>&nbsp;
+<b class="nc"><i class="no-highlight">86</i>&nbsp;        System.out.println(String.format(&quot;GenericArrayList:rotateCollection(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">87</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">89</i>&nbsp;
+<b class="nc"><i class="no-highlight">90</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">91</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<i class="no-highlight">92</i>&nbsp;
+<i class="no-highlight">93</i>&nbsp;        // GenericLinkedList rotate
+<b class="nc"><i class="no-highlight">94</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">95</i>&nbsp;            timeTaken = linkedListAnalysis.rotateCollection(2);</b>
+<b class="nc"><i class="no-highlight">96</i>&nbsp;            System.out.println(String.format(&quot;GenericLinkedList:rotateCollection(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">98</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">99</i>&nbsp;        }
+<i class="no-highlight">100</i>&nbsp;
+<b class="nc"><i class="no-highlight">101</i>&nbsp;        System.out.println(String.format(&quot;GenericLinkedList:rotateCollection(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">102</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">103</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">104</i>&nbsp;
+<b class="nc"><i class="no-highlight">105</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;        System.out.println(&quot;**collection rotate2**&quot;);</b>
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;        // GenericArrayList rotate
+<b class="nc"><i class="no-highlight">109</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">110</i>&nbsp;            timeTaken = arrayListAnalysis.rotateCollection2(2);</b>
+<b class="nc"><i class="no-highlight">111</i>&nbsp;            System.out.println(String.format(&quot;GenericArrayList:rotateCollection2(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">112</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">113</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">114</i>&nbsp;        }
+<i class="no-highlight">115</i>&nbsp;
+<b class="nc"><i class="no-highlight">116</i>&nbsp;        System.out.println(String.format(&quot;GenericArrayList:rotateCollection2(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">117</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<b class="nc"><i class="no-highlight">118</i>&nbsp;        totalTime = 0;</b>
+<i class="no-highlight">119</i>&nbsp;
+<b class="nc"><i class="no-highlight">120</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<b class="nc"><i class="no-highlight">121</i>&nbsp;        System.out.println(&quot;&quot;);</b>
+<i class="no-highlight">122</i>&nbsp;
+<i class="no-highlight">123</i>&nbsp;        // GenericLinkedList rotate
+<b class="nc"><i class="no-highlight">124</i>&nbsp;        for (int i=1; i&lt;= 50; ++i) {</b>
+<b class="nc"><i class="no-highlight">125</i>&nbsp;            timeTaken = linkedListAnalysis.rotateCollection2(2);</b>
+<b class="nc"><i class="no-highlight">126</i>&nbsp;            System.out.println(String.format(&quot;GenericLinkedList:rotateCollection2(%s)  - run %s &quot; +</b>
+<b class="nc"><i class="no-highlight">127</i>&nbsp;                    &quot;- time taken: %s ?s.  &quot;, rotateDistance, i, timeTaken));</b>
+<b class="nc"><i class="no-highlight">128</i>&nbsp;            totalTime += timeTaken;</b>
+<i class="no-highlight">129</i>&nbsp;        }
+<i class="no-highlight">130</i>&nbsp;
+<b class="nc"><i class="no-highlight">131</i>&nbsp;        System.out.println(String.format(&quot;GenericArrayList:rotateCollection2(%s) - average: %s ?s.  &quot;,</b>
+<b class="nc"><i class="no-highlight">132</i>&nbsp;                rotateDistance, totalTime/50));</b>
+<i class="no-highlight">133</i>&nbsp;    }
+<i class="no-highlight">134</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -175,7 +233,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2021-12-07 22:14</div>
+    <div style="float:right;">generated on 2021-12-08 23:04</div>
 </div>
 </body>
 </html>

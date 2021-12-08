@@ -29,7 +29,6 @@ public class GenericCollectionsTester1 {
 
     public static void printList(String message, GenericArrayList<Person> listToPrint) {
         System.out.println(message);
-        //TODO: Get this working
         for (Person currPerson : listToPrint) {
             System.out.println(currPerson.toString());
         }

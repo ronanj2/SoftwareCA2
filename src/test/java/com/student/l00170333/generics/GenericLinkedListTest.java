@@ -44,6 +44,9 @@ class GenericLinkedListTest extends CommonListTest {
     protected void remove() { super.remove(); }
 
     @Test
+    protected void removeBoolean() { super.removeBoolean(); }
+
+    @Test
     protected void isEmpty() { super.isEmpty(); }
 
     @Test
