@@ -28,6 +28,11 @@ We have excellent test coverage with all classes and methods covered.
 A test coverage report can be found in the out directory here: https://github.com/ronanj2/SoftwareCA2/tree/main/out/coverage - This report can be opened in a browser and will provide coloured overlay showing the classes/methods/lines covered.
 
 ---
+### JavaDoc
+JavaDoc has been generated and pushed to the /docs directory. 
+After cloning this repo, you can view docs by browsing to the index file located here: https://github.com/ronanj2/SoftwareCA2/tree/main/docs
+
+---
 
 ### Requirement 5_2: Analysis of rotate() methods
 In order to measure the performance of the different arrays, I created two java files here: https://github.com/ronanj2/SoftwareCA2/tree/main/src/main/java/com/student/l00170333/rotateAnalysis
